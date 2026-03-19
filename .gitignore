@@ -1,0 +1,46 @@
+# python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+*.egg
+
+# editors
+.vscode/
+.idea/
+.DS_Store
+
+# testing
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# experiment outputs
+wandb/
+runs/
+checkpoints/
+results/
+*.pt
+*.ckpt
+
+# latex
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+paper/*.toc
+
+# local
+.env
+*.local
+experiments/**/embed/
