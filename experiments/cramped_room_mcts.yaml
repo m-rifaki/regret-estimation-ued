@@ -1,0 +1,46 @@
+# MCTS-as-solver adversary in PAIRED on overcooked v2 (cramped_room).
+# Compare to cramped_room_ppo.yaml with everything else held fixed.
+
+partner_space:
+  kind: box
+  box:
+    hidden_dim_min: 32
+    hidden_dim_max: 256
+    n_layers_min: 1
+    n_layers_max: 4
+    lr_min: 1.0e-4
+    lr_max: 3.0e-3
+    train_steps_min: 5000
+    train_steps_max: 50000
+    temp_min: 0.5
+    temp_max: 2.0
+
+student:
+  kind: overcooked_ippo
+  layout: cramped_room
+  n_eval_episodes: 8
+  student_hidden: 64
+  student_n_layers: 2
+  student_lr: 3.0e-4
+  student_train_steps: 50000
+  rollout_horizon: 400
+  antagonist_hidden: 256
+  antagonist_n_layers: 4
+  antagonist_lr: 1.0e-3
+  antagonist_train_steps: 50000
+  antagonist_temperature: 1.0
+
+adversary:
+  kind: mcts
+  mcts:
+    n_simulations: 32
+    ucb_c: 1.4142135623730951
+    max_depth: 1
+    progressive_widening_alpha: 0.5
+    progressive_widening_k: 1.0
+    action_jitter: 0.15
+    seed: 0
+
+paired:
+  n_outer_steps: 200
+  seed: 0
