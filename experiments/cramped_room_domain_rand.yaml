@@ -1,0 +1,39 @@
+# Domain-randomization baseline: sample partner specs iid from the
+# uniform PartnerSpace, no learning on the adversary side. Use this
+# as the null-adversary baseline for both MCTS and PPO comparisons.
+
+partner_space:
+  kind: box
+  box: {}
+
+student:
+  kind: overcooked_ippo
+  layout: cramped_room
+  n_eval_episodes: 8
+  student_hidden: 64
+  student_n_layers: 2
+  student_lr: 3.0e-4
+  student_train_steps: 50000
+  rollout_horizon: 400
+  antagonist_hidden: 256
+  antagonist_n_layers: 4
+  antagonist_lr: 1.0e-3
+  antagonist_train_steps: 50000
+  antagonist_temperature: 1.0
+
+# Implemented as a degenerate PPO adversary with zero learning rate.
+adversary:
+  kind: ppo
+  ppo:
+    init_log_std: 0.0       # std = 1 on a [0,1] Box ~ uniform after clip
+    lr_mu: 0.0
+    lr_log_std: 0.0
+    clip_eps: 0.2
+    log_std_min: -2.0
+    log_std_max: 0.5
+    baseline_window: 32
+    seed: 0
+
+paired:
+  n_outer_steps: 200
+  seed: 0
