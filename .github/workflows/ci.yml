@@ -1,0 +1,40 @@
+# Runs on a SELF-HOSTED runner because GitHub Actions is billing-blocked on
+# this account. Hosted minutes are metered on private repos and the payment
+# method is declined, so every hosted run comes back `failure` with ZERO steps
+# having never been dispatched -- run 30951339350 on 2026-08-04 is the example.
+# A red X that means "never ran" looks exactly like one that means "tests
+# failed", which is how a dark CI goes unnoticed for days.
+#
+# Self-hosted runners are NOT metered, so the block does not reach them. Bring
+# the runner up with ~/Projects/infra-watch/start-runner.sh regret-estimation-ued.
+#
+# CI_RUNNER is `regret-estimation-ued-linux` today. Delete the variable once billing is
+# settled and this falls back to ubuntu-latest with no edit here.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-latest' }}
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e '.[dev]'
+      - name: ruff
+        run: ruff check src tests
+      - name: pytest
+        run: pytest -q
