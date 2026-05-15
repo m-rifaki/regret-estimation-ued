@@ -1,0 +1,12 @@
+{
+  "layout": "cramped_room",
+  "random_mean": 0.0,
+  "ippo_greedy_mean": 0.0,
+  "ippo_stoch_mean": 35.0,
+  "lift_over_random_greedy": 0.0,
+  "n_updates": 200,
+  "n_envs": 16,
+  "n_steps": 64,
+  "total_env_steps": 204800,
+  "seed": 0
+}
