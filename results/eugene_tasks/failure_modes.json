@@ -1,0 +1,44 @@
+[
+  {
+    "mode": "adversary collapses to one partner",
+    "symptom": "partner distribution becomes 1.0/0/0/0/0 early and stays",
+    "likely cause": "one partner always gives max regret, adversary exploits",
+    "normal?": "possibly normal if one partner is genuinely hardest for all focals",
+    "fix": "check regret matrix, if one column dominates then collapse is correct"
+  },
+  {
+    "mode": "regret stays high and never decreases",
+    "symptom": "per-step regret flat or increasing after many outer steps",
+    "likely cause": "focal agent not learning from the partner selection signal",
+    "normal?": "not normal after convergence",
+    "fix": "check focal agent inner-loop training is actually updating params"
+  },
+  {
+    "mode": "regret drops to zero immediately",
+    "symptom": "regret = 0 from step 1",
+    "likely cause": "focal agent already at best response for all partners, or antagonist value wrong",
+    "normal?": "suspicious, only expected if focal = optimal for all 5 partners",
+    "fix": "verify antagonist value computation, check cross-play matrix"
+  },
+  {
+    "mode": "all partners get equal weight forever",
+    "symptom": "distribution stays ~0.2/0.2/0.2/0.2/0.2 through training",
+    "likely cause": "adversary learning rate too low, or all partners give similar regret",
+    "normal?": "normal if regret is genuinely flat across partners",
+    "fix": "check regret variance across partners, increase adv lr if near-zero"
+  },
+  {
+    "mode": "focal agent performance degrades during UED",
+    "symptom": "focal return drops below pre-UED level",
+    "likely cause": "adversary pushing into catastrophically hard partners, focal forgets easy ones",
+    "normal?": "can happen early, not normal at convergence",
+    "fix": "add evaluation against held-out partner set, check for catastrophic forgetting"
+  },
+  {
+    "mode": "asymmetric topology heatmap",
+    "symptom": "R[i][j] very different from R[j][i]",
+    "likely cause": "agent_0 and agent_1 have different roles (emergent specialization), or eval noise",
+    "normal?": "normal in overcooked (roles matter), but magnitude should be checked",
+    "fix": "increase eval rollouts to reduce noise, report standard errors"
+  }
+]
