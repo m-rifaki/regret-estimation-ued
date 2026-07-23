@@ -1,0 +1,6 @@
+oracle     worst 100.0 (12/12 at 100)  mean 100.0
+mcts_g     worst  99.5 (11/12 at 100)  mean  99.9
+uniform    worst  83.3 (10/12 at 100)  mean  96.7
+mcts_root  worst  90.7 (9/12 at 100)  mean  98.1
+ppo        worst   8.3 (1/12 at 100)  mean  76.7
+mcts       worst   0.0 (0/12 at 100)  mean  61.7
